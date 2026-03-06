@@ -1,11 +1,9 @@
-package com.jose30a2.dscommerce.entities;
+package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_user")
@@ -16,7 +14,6 @@ public class User {
     private Long id;
     private String name;
 
-    // Configura que el campo email deve ser unico
     @Column(unique = true)
     private String email;
     private String phone;
@@ -26,7 +23,14 @@ public class User {
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    public User(){}
+    @ManyToMany
+    @JoinTable(name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public User() {
+    }
 
     public User(Long id, String name, String email, String phone, LocalDate birthDate, String password) {
         this.id = id;
@@ -85,21 +89,37 @@ public class User {
         this.password = password;
     }
 
-    // GETTER PARA LA LISTA DE ORDENES
     public List<Order> getOrders() {
         return orders;
     }
 
+    // Añadir nuevo role
+    public void addRole(Role role){
+        roles.add(role);
+    }
+
+    // Si tiene el role
+    public Boolean hasRole(String roleName){
+        for(Role role : roles){
+            if(role.getAuthority().equals(roleName))
+                return true;
+        }
+        return false;
+    }
+
+
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
+
         return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -1,4 +1,4 @@
-package com.jose30a2.dscommerce;
+package com.devsuperior.dscommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

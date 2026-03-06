@@ -1,7 +1,7 @@
-package com.jose30a2.dscommerce.exceptions;
+package com.devsuperior.dscommerce.services.exceptions;
 
+@SuppressWarnings("serial")
 public class ResourceNotFoundException extends RuntimeException {
-    // RunTimeException no exige try - catch
 
     public ResourceNotFoundException(String msg) {
         super(msg);

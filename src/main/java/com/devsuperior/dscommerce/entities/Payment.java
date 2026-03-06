@@ -1,4 +1,4 @@
-package com.jose30a2.dscommerce.entities;
+package com.devsuperior.dscommerce.entities;
 
 import jakarta.persistence.*;
 
@@ -20,7 +20,8 @@ public class Payment {
     @MapsId
     private Order order;
 
-    public Payment(){}
+    public Payment() {
+    }
 
     public Payment(Long id, Instant moment, Order order) {
         this.id = id;
@@ -54,14 +55,16 @@ public class Payment {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         Payment payment = (Payment) o;
+
         return Objects.equals(id, payment.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return id != null ? id.hashCode() : 0;
     }
 }
